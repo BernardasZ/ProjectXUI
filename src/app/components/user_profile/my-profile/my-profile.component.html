@@ -1,0 +1,33 @@
+<div class="container my-5">
+  <h1 class="mb-3">Edit my profile</h1>
+  <div class="row">
+    <div class="col-6">
+      <form #form="ngForm" (ngSubmit)="editUser()">
+
+        <div class="mb-3">
+          <label for="InputId1" class="form-label">User id</label>
+          <input type="text" class="form-control" id="InputId1" name="id" [(ngModel)]="user.id" disabled>
+        </div>
+
+        <div class="mb-3">
+          <label for="InputName1" class="form-label">User name</label>
+          <input type="text" class="form-control" id="InputName1" name="name" [(ngModel)]="user.name">
+        </div>
+
+        <div class="mb-3">
+          <label for="InputEmail1" class="form-label">User email</label>
+          <input type="email" class="form-control" id="InputEmail1" name="email" [(ngModel)]="user.email">
+        </div>
+
+        <div class="mb-3">
+          <label for="Role1" class="form-label">User role</label>
+          <input type="text" class="form-control" id="Role1" name="role" [(ngModel)]="user.role" disabled>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success me-md-2">Save</button>
+        <a class="btn btn-outline-secondary" role="button" (click)="back()">Back</a>
+      </form>
+
+    </div>
+  </div>
+</div>

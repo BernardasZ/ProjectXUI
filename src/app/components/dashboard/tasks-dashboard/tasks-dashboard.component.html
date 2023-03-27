@@ -1,46 +1,24 @@
 <main>
-    <div class="container py-3">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title text-dark">Special title treatment</h5>
-              <p class="card-text text-muted">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-outline-success me-md-2">Finish</a>
-              <a href="#" class="btn btn-outline-secondary">Edit</a>
-            </div>
+  <div class="container py-3">
+    <h1 class="mb-3">Dashboard</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col-sm-3" *ngFor="let task of tasks">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title text-dark">{{ task.title }}</h5>
+            <p class="card-text text-muted">{{ task.description }}</p>
           </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title text-dark">Special title treatment</h5>
-              <p class="card-text text-muted">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-outline-success me-md-2">Finish</a>
-              <a href="#" class="btn btn-outline-secondary">Edit</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title text-dark">Special title treatment</h5>
-              <p class="card-text text-muted">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-outline-success me-md-2">Finish</a>
-              <a href="#" class="btn btn-outline-secondary">Edit</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title text-dark">Special title treatment</h5>
-              <p class="card-text text-muted">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-outline-success me-md-2">Finish</a>
-              <a href="#" class="btn btn-outline-secondary">Edit</a>
-            </div>
+          <div class="py-3 px-3">
+            <p [ngSwitch]="task.status" class="card-text"> Status: 
+              <span *ngSwitchCase="'ToDo'" class="badge bg-secondary">{{ task.status }}</span>
+              <span *ngSwitchCase="'InProgress'" class="badge bg-warning text-dark">{{ task.status }}</span>
+              <span *ngSwitchDefault class="badge bg-success">{{ task.status }}</span>
+            </p>
+            <a *ngIf="task.status == 'InProgress'" class="btn btn-outline-success me-md-2" (click)="changeStatusToDone(task.id)">Finish</a>
+            <a class="btn btn-outline-secondary" routerLink="/tasks/edit/{{ task.id }}">Edit</a>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>     
+</main>

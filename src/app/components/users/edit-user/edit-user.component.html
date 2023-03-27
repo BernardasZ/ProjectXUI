@@ -1,0 +1,22 @@
+<div class="container my-5">
+  <h1 class="mb-3">User edit</h1>
+  <div class="row">
+    <div class="col-6">
+      <form #form="ngForm" (ngSubmit)="editUser()">
+        
+        <div class="mb-3">
+          <label for="InputName1" class="form-label">User name</label>
+          <input type="text" class="form-control" id="InputName1" name="name" [(ngModel)]="editUserRequest.name">
+        </div>
+
+        <div class="mb-3">
+          <label for="InputEmail1" class="form-label">User name</label>
+          <input type="email" class="form-control" id="InputEmail1" name="email" [(ngModel)]="editUserRequest.email">
+        </div>
+
+        <button type="submit" class="btn btn-outline-success me-md-2">Save</button>
+        <a class="btn btn-outline-secondary" role="button" (click)="back()">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

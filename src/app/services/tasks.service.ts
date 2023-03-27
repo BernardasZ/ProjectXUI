@@ -1,50 +1,34 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';
 import { AddTask } from '../models/task/addTask.model';
 import { DeleteTask } from '../models/task/deleteTask.model';
 import { Task } from '../models/task/task.model';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  baseApiUrl: string = environment.baseApiUrl;
-  headers = {
-    headers: 
-    {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4iLCJuYW1laWQiOiJLU0NzcUVNV1hrR0l3TmZ1N2Z4Vmw0dGhGVFlEQU9vKzFJYnN5QldHMDB3enJ0MVJwRW9adk5BclFYcnBvVXZUIiwibmJmIjoxNjc5ODU1OTY1LCJleHAiOjE2ODA0NjA3NjQsImlhdCI6MTY3OTg1NTk2NX0.oLbljOET1Hr-ApS0YuYrDU7zK7hIY4xS6yx22kBfzKo',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    }
-  };
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService) { }
 
   public getAllTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.baseApiUrl + 'tasks/user/1',  this.headers);
+    return this.http.get<Task[]>('tasks/user/1');
   }
 
   public getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(this.baseApiUrl + 'tasks/' + id, this.headers);
+    return this.http.get<Task>('tasks/' + id);
   }
 
   public addTask(task: AddTask): Observable<Task> {
-    return this.http.post<Task>(this.baseApiUrl + 'tasks', task, this.headers);
+    return this.http.post<Task>('tasks', task);
   }
 
   public editTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(this.baseApiUrl + 'tasks', task, this.headers);
+    return this.http.put<Task>('tasks', task);
   }
 
-  public deleteTask(task: DeleteTask): Observable<DeleteTask> {
-    let options = {
-      headers: this.headers.headers,
-      body: task
-    };
-
-    return this.http.delete<DeleteTask>(this.baseApiUrl + 'tasks', options);
+  public deleteTask(task: DeleteTask): Observable<Task> {
+    return this.http.delete<Task>('tasks', task);
   }
 }

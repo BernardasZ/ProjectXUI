@@ -4,13 +4,13 @@
     <div class="col-6">
       <form #form="ngForm" (ngSubmit)="editTask()">
         <div class="mb-3">
-          <label for="InputName1" class="form-label">Task title</label>
-          <input type="text" class="form-control" id="InputEmail1" name="name" [(ngModel)]="editTaskRequest.name">
+          <label for="InputTitle1" class="form-label">Task title</label>
+          <input type="text" class="form-control" id="InputTitle1" name="title" [(ngModel)]="editTaskRequest.title">
         </div>
 
         <div class="mb-3">
           <label for="InputDescription1" class="form-label">Task description</label>
-          <textarea class="form-control" id="InputDescription1" rows="5"></textarea>
+          <textarea class="form-control" id="InputDescription1" rows="5" name="description" [(ngModel)]="editTaskRequest.description"></textarea>
         </div>
 
         <div class="mb-3">
@@ -23,7 +23,7 @@
         </div>
 
         <button type="submit" class="btn btn-outline-success me-md-2">Save</button>
-        <a class="btn btn-outline-secondary" role="button" routerLink="/tasks">Cancel</a>
+        <a class="btn btn-outline-secondary" role="button" (click)="back()">Cancel</a>
       </form>
     </div>
   </div>

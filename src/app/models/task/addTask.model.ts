@@ -1,5 +1,6 @@
 export interface AddTask {
   userId: number;
-  name: string;
+  title: string;
+  description: string;
   status: string;
 }
