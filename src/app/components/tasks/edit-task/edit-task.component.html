@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <h1 class="mb-3">Task edit</h1>
+  <div class="row">
+    <div class="col-6">
+      <form #form="ngForm" (ngSubmit)="editTask()">
+        <div class="mb-3">
+          <label for="InputName1" class="form-label">Task title</label>
+          <input type="text" class="form-control" id="InputEmail1" name="name" [(ngModel)]="editTaskRequest.name">
+        </div>
+
+        <div class="mb-3">
+          <label for="InputDescription1" class="form-label">Task description</label>
+          <textarea class="form-control" id="InputDescription1" rows="5"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="InputTaskStatus1" class="form-label">Task status</label>
+          <select class="form-select" id="InputTaskStatus1" name="status" [(ngModel)]="editTaskRequest.status">
+            <option value="ToDo" selected="To Do">To do</option>
+            <option value="InProgress">In progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-outline-success me-md-2">Save</button>
+        <a class="btn btn-outline-secondary" role="button" routerLink="/tasks">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

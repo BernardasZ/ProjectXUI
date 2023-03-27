@@ -1,0 +1,33 @@
+<div class="container my-5">
+  <h1 class="mb-3">Tasks</h1>
+  <table class="table table-hover" *ngIf="tasks && tasks.length > 0">
+    <thead>
+      <tr>
+        <th class="col-1">Id</th>
+        <th class="col-1">User Id</th>
+        <th class="col-2">Name</th>
+        <th class="col-4">Name</th>
+        <th class="col-1">Status</th>
+        <th class="col-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.id }}</td>
+        <td>{{ task.userId }}</td>
+        <td>{{ task.name }}</td>
+        <td></td>
+        <td>{{ task.status }}</td>
+        <td>
+          <a class="btn btn-outline-primary me-md-2" type="button" routerLink="edit/{{ task.id }}">Edit</a>
+          <a class="btn btn-outline-danger" type="button" (click)="deleteTask(task.id)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="tasks && tasks.length <= 0">Not tasks were found.</p>
+  <div class="mb-3">
+    <a class="btn btn-primary" type="button" routerLink="add">Add new task</a>
+  </div>
+  
+</div>
