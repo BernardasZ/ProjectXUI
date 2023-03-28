@@ -18,6 +18,7 @@ import { MyProfileComponent } from './components/user-profile/my-profile/my-prof
 import { ChangePasswordComponent } from './components/user-profile/change-password/change-password.component';
 import { SignOutComponent } from './components/user-profile/sign-out/sign-out.component';
 import { JwtTokenService } from './services/auth/jwt-token.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { JwtTokenService } from './services/auth/jwt-token.service';
       useFactory: applicationHttpClientCreator,
       deps: [HttpClient, JwtTokenService]
     },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

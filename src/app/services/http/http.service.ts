@@ -65,22 +65,6 @@ export class HttpService {
       this.http.delete<T>(this.baseApiUrl + endPoint, requestOptions));
   }
 
-  // private callHttpClient<T>(method: Observable<T>): T | null {
-  //   let result: T | null = null;
-
-  //   method.subscribe({
-  //     next: (item) => {
-  //       result = item;
-  //     },
-  //     error: (response) => {
-  //       console.log(response);
-  //       throw Error(response);
-  //     }
-  //   });
-
-  //   return result;
-  // }
-
   private async executeHttpRequestAsync<T>(method: Observable<T>): Promise<T | null> {
     let result: T | null = null;
     await this.createHttpRequestPromise(method)

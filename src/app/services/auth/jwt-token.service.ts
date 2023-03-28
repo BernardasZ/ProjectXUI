@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
 import { environment } from 'src/app/environments/environment';
-import { LocalStorageService } from '../storage/local-storage.service';
+import { CookieStorageService } from '../storage/cookie-storage.service';
 
 export interface JwtPayload {
   role?: string;
@@ -17,7 +17,7 @@ export class JwtTokenService {
   jwtToken: string | null = null;
   decodedToken: JwtPayload | null = null;
 
-  constructor(private storageService: LocalStorageService) { }
+  constructor(private cookieStorageService: CookieStorageService) { }
 
   public getToken() {
     this.decodeToken();
@@ -50,7 +50,7 @@ export class JwtTokenService {
   }
 
   private decodeToken(): void {
-    let token = this.storageService.get(environment.keyJwt);
+    let token = this.cookieStorageService.get(environment.keyJwt);
 
     if (token && this.jwtToken !== token) {
         this.jwtToken = token;

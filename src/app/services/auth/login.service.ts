@@ -8,7 +8,7 @@ import { UserLogin } from 'src/app/models/login/userLogin.model';
 import { UserPasswordReset } from 'src/app/models/login/userPasswordReset.model';
 import { User } from 'src/app/models/user/user.model';
 import { HttpService } from '../http/http.service';
-import { LocalStorageService } from '../storage/local-storage.service';
+import { CookieStorageService } from '../storage/cookie-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +17,18 @@ export class LoginService {
   
   constructor(
     private http: HttpService,
-    private storageService: LocalStorageService,
+    private cookieStorageService: CookieStorageService,
     private router: Router) { }
 
   public async signInAsync(credentials: UserCredentials) {
     let user = await this.http.postAsync<UserLogin>('authentication/login', credentials);
     if (user)
     {
-        this.storageService.set(environment.keyJwt, user.jwt);
-        this.storageService.set(environment.keyUserId, user.id.toString());
-        this.storageService.set(environment.keyRole, user.role);
-        this.router.navigate(['']);
+      this.cookieStorageService.deleteAll();
+      this.cookieStorageService.set(environment.keyJwt, user.jwt);
+      this.cookieStorageService.set(environment.keyUserId, user.id.toString());
+      this.cookieStorageService.set(environment.keyRole, user.role);
+      this.router.navigate(['']);
     }
   }
 
@@ -55,7 +56,7 @@ export class LoginService {
   }
 
   private finishSignOut(): void {
-    this.storageService.clear();
+    this.cookieStorageService.deleteAll();
     this.router.navigate(['sign-in']);
   }
 }
