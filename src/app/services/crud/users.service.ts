@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AddUser } from 'src/app/models/user/addUser.model';
 import { DeleteUser } from 'src/app/models/user/deleteUser.model';
 import { EditUser } from 'src/app/models/user/editUser.model';
@@ -13,23 +12,23 @@ export class UsersService {
 
   constructor(private http: HttpService) { }
 
-  public getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>('users');
+  public async getAllUsersAsync() {
+    return await this.http.getAsync<User[]>('users');
   }
 
-  public getUser(id: number): Observable<User> {
-    return this.http.get<User>('users/' + id);
+  public async getUserAsync(id: number) {
+    return await this.http.getAsync<User>('users/' + id);
   }
 
-  public addUser(user: AddUser): Observable<User> {
-    return this.http.post<User>('users', user);
+  public async addUserAsync(user: AddUser) {
+    return await this.http.postAsync<User>('users', user);
   }
 
-  public editUser(user: EditUser): Observable<User> {
-    return this.http.put<User>('users', user);
+  public async editUserAsync(user: EditUser) {
+    return await this.http.putAsync<User>('users', user);
   }
 
-  public deleteUser(user: DeleteUser): Observable<User> {
-    return this.http.delete<User>('users', user);
+  public async deleteUserAsync(user: DeleteUser) {
+    return await this.http.deleteAsync<User>('users', user);
   }
 }

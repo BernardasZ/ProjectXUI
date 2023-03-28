@@ -22,41 +22,33 @@ export class MyProfileComponent implements OnInit {
     private usersService: UsersService,
     private location: Location) { }
 
-  ngOnInit(): void { 
-    this.getUser(1); 
-  }
+  async ngOnInit() { 
+    try {
+      let result = await this.usersService.getUserAsync(1);
 
-  public getUser(id: number) {
-    this.usersService.getUser(id)
-    .subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-      error: (response) => {
-        console.log(response);
+      if (result) {
+        this.user = result;
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  public editUser() {
+  public async editUserAsync() {
     let editUserRequest: EditUser = {
       id: this.user.id,
       name: this.user.name,
       email: this.user.email
     };
     
-    this.usersService.editUser(editUserRequest)
-    .subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+    let result = await this.usersService.editUserAsync(editUserRequest);
+
+    if (result) {
+      this.user = result;
+    }
   }
 
-  public back(): void {
+  public back() {
     this.location.back();
   }
 }

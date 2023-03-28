@@ -20,13 +20,13 @@ export class ChangePasswordComponent implements OnInit {
     private loginService: LoginService,
     private location: Location) { }
 
-  ngOnInit(): void { }
+  ngOnInit() { }
 
-  public submit(): void {
-    this.loginService.changePassword(this.changePasswordCredentials);
+  public async submitAsync() {
+    await this.loginService.changePasswordAsync(this.changePasswordCredentials);
   }
 
-  public back(): void {
+  public back() {
     this.location.back();
   }
 }

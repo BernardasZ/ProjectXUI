@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, isObservable, Observable, Subscription } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
+import { User } from 'src/app/models/user/user.model';
 import { JwtTokenService } from '../auth/jwt-token.service';
 
 export interface IRequestOptions {
@@ -14,7 +15,9 @@ export interface IRequestOptions {
   body?: any;
 }
 
-export function applicationHttpClientCreator(http: HttpClient, jwtService: JwtTokenService) {
+export function applicationHttpClientCreator(
+  http: HttpClient,
+  jwtService: JwtTokenService) {
   return new HttpService(http, jwtService);
 }
 
@@ -28,24 +31,29 @@ export class HttpService {
     headers: this.getHeaders()
   };
 
-  constructor(private http: HttpClient, private jwtService: JwtTokenService) { }
+  constructor(
+    private http: HttpClient,
+    private jwtService: JwtTokenService) { }
 
-  public get<T>(endPoint: string): Observable<T> {
+  public async getAsync<T>(endPoint: string): Promise<T | null> {
     this.setAuthorizationHeaderToken();
-    return this.http.get<T>(this.baseApiUrl + endPoint, this.options);
+    return await this.executeHttpRequestAsync(
+      this.http.get<T>(this.baseApiUrl + endPoint, this.options));
   }
 
-  public post<T>(endPoint: string, params?: Object): Observable<T> {
+  public async postAsync<T>(endPoint: string, params?: Object): Promise<T | null> {
     this.setAuthorizationHeaderToken();
-    return this.http.post<T>(this.baseApiUrl + endPoint, params, this.options);
+    return await this.executeHttpRequestAsync(
+      this.http.post<T>(this.baseApiUrl + endPoint, params, this.options));
   }
 
-  public put<T>(endPoint: string, params?: Object): Observable<T> {
+  public async putAsync<T>(endPoint: string, params?: Object): Promise<T | null> {
     this.setAuthorizationHeaderToken();
-    return this.http.put<T>(this.baseApiUrl + endPoint, params, this.options);
+    return await this.executeHttpRequestAsync(
+      this.http.put<T>(this.baseApiUrl + endPoint, params, this.options));
   }
 
-  public delete<T>(endPoint: string, params?: Object): Observable<T> {
+  public async deleteAsync<T>(endPoint: string, params?: Object): Promise<T | null> {
     this.setAuthorizationHeaderToken();
 
     let requestOptions: IRequestOptions = {
@@ -53,7 +61,51 @@ export class HttpService {
       body: params
     };
 
-    return this.http.delete<T>(this.baseApiUrl + endPoint, requestOptions);
+    return await this.executeHttpRequestAsync(
+      this.http.delete<T>(this.baseApiUrl + endPoint, requestOptions));
+  }
+
+  // private callHttpClient<T>(method: Observable<T>): T | null {
+  //   let result: T | null = null;
+
+  //   method.subscribe({
+  //     next: (item) => {
+  //       result = item;
+  //     },
+  //     error: (response) => {
+  //       console.log(response);
+  //       throw Error(response);
+  //     }
+  //   });
+
+  //   return result;
+  // }
+
+  private async executeHttpRequestAsync<T>(method: Observable<T>): Promise<T | null> {
+    let result: T | null = null;
+    await this.createHttpRequestPromise(method)
+      .then((success) => {
+        result = success;
+      })
+      .catch((error) => {
+        console.log(error);
+        //throw Error(error);
+      });
+
+    return result;
+  }
+
+  private createHttpRequestPromise<T>(method: Observable<T>): Promise<T | null> {
+    return new Promise<T | null>(function(resolve, reject) {
+      method.subscribe({
+        next: (item) => {
+          resolve(item);
+        },
+        error: (response) => {
+          reject(response);
+        }
+      })
+    });
   }
 
   private setAuthorizationHeaderToken(): void {

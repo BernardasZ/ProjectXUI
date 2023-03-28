@@ -10,7 +10,11 @@ export class SignOutComponent {
 
   constructor(private loginService: LoginService) {}
 
-  ngOnInit(): void {
-    this.loginService.singOut();
+  async ngOnInit() {
+    try {
+      await this.loginService.singOutAsync();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

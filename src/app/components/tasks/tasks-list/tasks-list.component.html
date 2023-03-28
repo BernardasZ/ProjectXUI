@@ -20,7 +20,7 @@
         <td>{{ task.status }}</td>
         <td>
           <a class="btn btn-outline-primary me-md-2" type="button" routerLink="edit/{{ task.id }}">Edit</a>
-          <a class="btn btn-outline-danger" type="button" (click)="deleteTask(task.id)">Delete</a>
+          <a class="btn btn-outline-danger" type="button" (click)="deleteTaskAsync(task.id)">Delete</a>
         </td>
       </tr>
     </tbody>

@@ -16,7 +16,7 @@ export class SignInComponent {
 
   constructor(private loginService: LoginService) {}
 
-  public signIn(): void {
-    this.loginService.signIn(this.userCredentials);
+  public async signInAsync() {
+    await this.loginService.signInAsync(this.userCredentials);
   }
 }

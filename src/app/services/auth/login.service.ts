@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
 import { ChangePassword } from 'src/app/models/login/changePassword.model';
 import { InitPasswordReset } from 'src/app/models/login/initPasswordReset.model';
@@ -21,51 +20,42 @@ export class LoginService {
     private storageService: LocalStorageService,
     private router: Router) { }
 
-  public signIn(credentials: UserCredentials): void {
-    this.http.post<UserLogin>('authentication/login', credentials)
-    .subscribe({
-      next: (user) => {
+  public async signInAsync(credentials: UserCredentials) {
+    let user = await this.http.postAsync<UserLogin>('authentication/login', credentials);
+    if (user)
+    {
         this.storageService.set(environment.keyJwt, user.jwt);
         this.storageService.set(environment.keyUserId, user.id.toString());
         this.storageService.set(environment.keyRole, user.role);
         this.router.navigate(['']);
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+    }
   }
 
-  public singOut(): void {
-    this.http.delete<any>('authentication/logout')
-    .subscribe({
-      next: () => {
-        this.storageService.clear();
-        this.router.navigate(['sign-in']);
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async singOutAsync() {
+    await this.http.deleteAsync<any>('authentication/logout');
+    this.finishSignOut();
   }
 
-  public changePassword(changePassword: ChangePassword): void {
-    this.http.post<User>('authentication/change-password', changePassword)
-    .subscribe({
-      next: () => {
-        this.singOut();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });;
+  public async changePasswordAsync(changePassword: ChangePassword) {
+    await this.http.postAsync<User>('authentication/change-password', changePassword);
+    await this.singOutAsync();
   }
   
-  public initPasswordReset(initPasswordReset: InitPasswordReset): Observable<any> {
-    return this.http.post('authentication/init-password-reset', initPasswordReset);
+  public async initPasswordResetAsync(initPasswordReset: InitPasswordReset) {
+    await this.http.postAsync('authentication/init-password-reset', initPasswordReset);
   }
 
-  public resetPassword(userPasswordReset: UserPasswordReset): Observable<User> {
-    return this.http.post<User>('authentication/reset-password', userPasswordReset);
+  public async resetPasswordAsync(userPasswordReset: UserPasswordReset) {
+    await this.http.postAsync<User>('authentication/reset-password', userPasswordReset);
+  }
+
+  public async checkSessionAsync() {
+    await this.http.getAsync<any>('authentication/check-session');
+    this.finishSignOut();
+  }
+
+  private finishSignOut(): void {
+    this.storageService.clear();
+    this.router.navigate(['sign-in']);
   }
 }

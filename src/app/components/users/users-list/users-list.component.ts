@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeleteUser } from 'src/app/models/user/deleteUser.model';
 import { User } from 'src/app/models/user/user.model';
 import { UsersService } from 'src/app/services/crud/users.service';
+import { __await } from 'tslib';
 
 @Component({
   selector: 'app-users-list',
@@ -14,35 +15,28 @@ export class UsersListComponent implements OnInit {
 
   constructor(private usersService: UsersService) {}
 
-  ngOnInit(): void {
-    this.getAllUsers();
+  async ngOnInit() {
+    try {
+      await this.getAllUsersAsync();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getAllUsers(): void {
-    this.usersService.getAllUsers()
-    .subscribe({
-      next: (users) => {
-        this.users = users;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
+  public async getAllUsersAsync() {
+    let result = await this.usersService.getAllUsersAsync();
+
+    if (result) {
+      this.users = result;
+    }
   }
 
-  deleteUser(id: number): void {
+  public async deleteUserAsync(id: number) {
     let user: DeleteUser = {
       id: id
     };
 
-    this.usersService.deleteUser(user)
-    .subscribe({
-      next: () => {
-        this.getAllUsers();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
+    await this.usersService.deleteUserAsync(user);
+    await this.getAllUsersAsync();
   }
 }

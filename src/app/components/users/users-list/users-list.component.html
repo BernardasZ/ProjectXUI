@@ -18,7 +18,7 @@
         <td>{{ user.role }}</td>
         <td>
           <a class="btn btn-outline-primary me-md-2" *ngIf="user.role != 'Admin'" type="button" routerLink="edit/{{ user.id }}">Edit</a>
-          <a class="btn btn-outline-danger" *ngIf="user.role != 'Admin'" type="button" (click)="deleteUser(user.id)">Delete</a>
+          <a class="btn btn-outline-danger" *ngIf="user.role != 'Admin'" type="button" (click)="deleteUserAsync(user.id)">Delete</a>
         </td>
       </tr>
     </tbody>

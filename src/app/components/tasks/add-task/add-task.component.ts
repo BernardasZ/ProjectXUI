@@ -19,21 +19,17 @@ export class AddTaskComponent implements OnInit {
 
   constructor(private tasksService: TasksService, private location: Location) { }
 
-  ngOnInit(): void { }
+  ngOnInit() { }
 
-  public addTask() {
-    this.tasksService.addTask(this.addTaskRequest)
-    .subscribe({
-      next: () => {
-        this.back();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async addTaskAsync() {
+    let result = await this.tasksService.addTaskAsync(this.addTaskRequest);
+
+    if (result) {
+      this.back();
+    }
   }
 
-  public back(): void {
+  public back() {
     this.location.back();
   }
 }

@@ -13,44 +13,29 @@ export class TasksDashboardComponent implements OnInit {
 
   constructor(private tasksService: TasksService) { }
 
-  ngOnInit(): void {
-    this.getAllTasks();
+  async ngOnInit() {
+    try {           
+      await this.getAllTasksAsync();
+    } catch (error) {           
+        console.error(error);       
+    }
   }
 
-  getAllTasks() {
-    this.tasksService.getAllTasks()
-    .subscribe({
-      next: (tasks) => {
-        this.tasks = tasks;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
+  public async getAllTasksAsync() {
+    let result = await this.tasksService.getAllTasksAsync();
+
+    if (result) {
+      this.tasks = result;
+    }  
   }
 
-  changeStatusToDone(id: number) {
-    this.tasksService.getTask(id)
-    .subscribe({
-      next: (task) => {
-        task.status = 'Done';
-        this.editTask(task);
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
-  }
+  public async changeStatusToDone(id: number) {
+    let result = await this.tasksService.getTaskAsync(id);
 
-  editTask(task: Task): void {
-    this.tasksService.editTask(task)
-    .subscribe({
-      next: () => {
-        this.getAllTasks();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+    if (result) {
+      result.status = 'Done';
+      await this.tasksService.editTaskAsync(result);
+      await this.getAllTasksAsync();
+    }
   }
 }

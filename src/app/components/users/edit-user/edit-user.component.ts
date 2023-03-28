@@ -22,37 +22,33 @@ export class EditUserComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location) { }
 
-  ngOnInit(): void { 
-    this.route.params.subscribe(params => {
-      this.getUser(params['id']);
-    }); 
+  async ngOnInit() { 
+    try {
+      this.route.params.subscribe(async params => {
+        await this.getUserAsync(params['id']);
+      }); 
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  public getUser(id: number) {
-    this.usersService.getUser(id)
-    .subscribe({
-      next: (user) => {
-        this.editUserRequest = user;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async getUserAsync(id: number) {
+    let result = await this.usersService.getUserAsync(id);
+
+    if (result) {
+      this.editUserRequest = result;
+    }
   }
 
-  public editUser() {
-    this.usersService.editUser(this.editUserRequest)
-    .subscribe({
-      next: () => {
-        this.back();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async editUserAsync() {
+    let result = await this.usersService.editUserAsync(this.editUserRequest);
+
+    if (result) {
+      this.back();
+    }
   }
 
-  public back(): void {
+  public back() {
     this.location.back();
   }
 }

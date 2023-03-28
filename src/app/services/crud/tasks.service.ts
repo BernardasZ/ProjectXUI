@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AddTask } from 'src/app/models/task/addTask.model';
 import { DeleteTask } from 'src/app/models/task/deleteTask.model';
 import { Task } from 'src/app/models/task/task.model';
@@ -12,23 +11,23 @@ export class TasksService {
 
   constructor(private http: HttpService) { }
 
-  public getAllTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>('tasks/user/1');
+  public async getAllTasksAsync() {
+    return await this.http.getAsync<Task[]>('tasks/user/1');
   }
 
-  public getTask(id: number): Observable<Task> {
-    return this.http.get<Task>('tasks/' + id);
+  public async getTaskAsync(id: number) {
+    return await this.http.getAsync<Task>('tasks/' + id);
   }
 
-  public addTask(task: AddTask): Observable<Task> {
-    return this.http.post<Task>('tasks', task);
+  public async addTaskAsync(task: AddTask) {
+    return await this.http.postAsync<Task>('tasks', task);
   }
 
-  public editTask(task: Task): Observable<Task> {
-    return this.http.put<Task>('tasks', task);
+  public async editTaskAsync(task: Task) {
+    return await this.http.putAsync<Task>('tasks', task);
   }
 
-  public deleteTask(task: DeleteTask): Observable<Task> {
-    return this.http.delete<Task>('tasks', task);
+  public async deleteTaskAsync(task: DeleteTask){
+    return await this.http.deleteAsync<Task>('tasks', task);
   }
 }

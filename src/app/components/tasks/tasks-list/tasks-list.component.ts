@@ -14,36 +14,29 @@ export class TasksListComponent implements OnInit {
 
   constructor(private tasksService: TasksService) {}
 
-  ngOnInit(): void {
-    this.getAllTasks();
+  async ngOnInit() {
+    try {
+      await this.getAllTasksAsync();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getAllTasks() {
-    this.tasksService.getAllTasks()
-    .subscribe({
-      next: (tasks) => {
-        this.tasks = tasks;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
+  public async getAllTasksAsync() {
+    let result = await this.tasksService.getAllTasksAsync();
+
+    if (result) {
+      this.tasks = result;
+    }
   }
 
-  deleteTask(id: number) {
+  public async deleteTaskAsync(id: number) {
     let task: DeleteTask = {
       id: id,
       userId: 1
     };
 
-    this.tasksService.deleteTask(task)
-    .subscribe({
-      next: () => {
-        this.getAllTasks();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    })
+    await this.tasksService.deleteTaskAsync(task);
+    await this.getAllTasksAsync();
   }
 }

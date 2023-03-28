@@ -24,37 +24,33 @@ export class EditTaskComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location) { }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.getTask(params['id']);
-    });
+  async ngOnInit() {
+    try {
+      this.route.params.subscribe(async params => {
+        await this.getTaskAsync(params['id']);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  public getTask(id: number): void  {
-    this.tasksService.getTask(id)
-    .subscribe({
-      next: (task) => {
-        this.editTaskRequest = task;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async getTaskAsync(id: number)  {
+    let result = await this.tasksService.getTaskAsync(id);
+
+    if (result) {
+      this.editTaskRequest = result;
+    }
   }
 
-  public editTask(): void {
-    this.tasksService.editTask(this.editTaskRequest)
-    .subscribe({
-      next: () => {
-        this.back();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+  public async editTaskAsync() {
+    let result = await this.tasksService.editTaskAsync(this.editTaskRequest);
+    
+    if (result) {
+      this.back();
+    }
   }
 
-  public back(): void {
+  public back() {
     this.location.back();
   }
 }
