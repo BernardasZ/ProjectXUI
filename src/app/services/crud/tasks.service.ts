@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddTask } from '../models/task/addTask.model';
-import { DeleteTask } from '../models/task/deleteTask.model';
-import { Task } from '../models/task/task.model';
-import { HttpService } from './http.service';
+import { AddTask } from 'src/app/models/task/addTask.model';
+import { DeleteTask } from 'src/app/models/task/deleteTask.model';
+import { Task } from 'src/app/models/task/task.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'

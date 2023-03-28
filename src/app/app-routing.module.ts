@@ -6,41 +6,61 @@ import { TasksListComponent } from './components/tasks/tasks-list/tasks-list.com
 import { EditTaskComponent } from './components/tasks/edit-task/edit-task.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
-import { MyProfileComponent } from './components/user_profile/my-profile/my-profile.component';
-import { ChangePasswordComponent } from './components/user_profile/change-password/change-password.component';
+import { AuthorizeGuardService } from './services/auth/authorize-guard.service';
+import { MyProfileComponent } from './components/user-profile/my-profile/my-profile.component';
+import { ChangePasswordComponent } from './components/user-profile/change-password/change-password.component';
+import { SignInComponent } from './components/authentication/sign-in/sign-in.component';
+import { SignOutComponent } from './components/user-profile/sign-out/sign-out.component';
 
 const routes: Routes = [
   {
+    path: 'sign-in',
+    component: SignInComponent
+  },
+  {
     path: '',
-    component: TasksDashboardComponent
+    component: TasksDashboardComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'tasks',
-    component: TasksListComponent
+    component: TasksListComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'tasks/add',
-    component: AddTaskComponent
+    component: AddTaskComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'tasks/edit/:id',
-    component: EditTaskComponent
+    component: EditTaskComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'users',
-    component: UsersListComponent
+    component: UsersListComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'users/edit/:id',
-    component: EditUserComponent
+    component: EditUserComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'profile/user/edit',
-    component: MyProfileComponent
+    component: MyProfileComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'profile/user/change-password',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [AuthorizeGuardService]
+  },
+  {
+    path: 'sign-out',
+    component: SignOutComponent,
+    canActivate: [AuthorizeGuardService]
   }
 ];
 

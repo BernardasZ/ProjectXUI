@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddTask } from 'src/app/models/task/addTask.model';
-import { TasksService } from 'src/app/services/tasks.service';
-import { Router } from '@angular/router';
+import { TasksService } from 'src/app/services/crud/tasks.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -18,7 +17,7 @@ export class AddTaskComponent implements OnInit {
     status: 'ToDo'
   };
 
-  constructor(private tasksService: TasksService, private router: Router, private location: Location) { }
+  constructor(private tasksService: TasksService, private location: Location) { }
 
   ngOnInit(): void { }
 

@@ -12,9 +12,12 @@ import { EditTaskComponent } from './components/tasks/edit-task/edit-task.compon
 import { TasksDashboardComponent } from './components/dashboard/tasks-dashboard/tasks-dashboard.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
-import { MyProfileComponent } from './components/user_profile/my-profile/my-profile.component';
-import { ChangePasswordComponent } from './components/user_profile/change-password/change-password.component';
-import { HttpService, applicationHttpClientCreator } from './services/http.service';
+import { HttpService, applicationHttpClientCreator } from './services/http/http.service';
+import { SignInComponent } from './components/authentication/sign-in/sign-in.component';
+import { MyProfileComponent } from './components/user-profile/my-profile/my-profile.component';
+import { ChangePasswordComponent } from './components/user-profile/change-password/change-password.component';
+import { SignOutComponent } from './components/user-profile/sign-out/sign-out.component';
+import { JwtTokenService } from './services/auth/jwt-token.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { HttpService, applicationHttpClientCreator } from './services/http.servi
     UsersListComponent,
     EditUserComponent,
     MyProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    SignInComponent,
+    SignOutComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,7 @@ import { HttpService, applicationHttpClientCreator } from './services/http.servi
     {
       provide: HttpService,
       useFactory: applicationHttpClientCreator,
-      deps: [HttpClient]
+      deps: [HttpClient, JwtTokenService]
     },
   ],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeleteUser } from 'src/app/models/user/deleteUser.model';
 import { User } from 'src/app/models/user/user.model';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from 'src/app/services/crud/users.service';
 
 @Component({
   selector: 'app-users-list',

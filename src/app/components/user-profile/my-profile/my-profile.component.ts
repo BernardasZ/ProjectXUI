@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditUser } from 'src/app/models/user/editUser.model';
 import { User } from 'src/app/models/user/user.model';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from 'src/app/services/crud/users.service';
 import { Location } from '@angular/common';
 
 @Component({

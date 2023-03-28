@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddUser } from '../models/user/addUser.model';
-import { EditUser } from '../models/user/editUser.model';
-import { DeleteUser } from '../models/user/deleteUser.model';
-import { User } from '../models/user/user.model';
-import { HttpService } from './http.service';
+import { AddUser } from 'src/app/models/user/addUser.model';
+import { DeleteUser } from 'src/app/models/user/deleteUser.model';
+import { EditUser } from 'src/app/models/user/editUser.model';
+import { User } from 'src/app/models/user/user.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'

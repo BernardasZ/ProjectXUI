@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePassword } from 'src/app/models/login/changePassword.model';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginService } from 'src/app/services/auth/login.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -23,31 +23,7 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void { }
 
   public submit(): void {
-    this.changePassword(this.changePasswordCredentials);
-  }
-
-  public changePassword(changePassword: ChangePassword) {
-    this.loginService.changePassword(changePassword)
-    .subscribe({
-      next: () => {
-        this.singOut();
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
-  }
-
-  public singOut() {
-    this.loginService.singOut()
-    .subscribe({
-      next: () => {
-        //TODO: Delete session;
-      },
-      error: (response) => {
-        console.log(response);
-      }
-    });
+    this.loginService.changePassword(this.changePasswordCredentials);
   }
 
   public back(): void {
