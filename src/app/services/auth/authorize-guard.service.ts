@@ -11,13 +11,13 @@ export class AuthorizeGuardService {
 
   constructor(
     private jwtService: JwtTokenService,
-    private logiService: LoginService) { }
+    private loginService: LoginService) { }
     
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | boolean {
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
     if (this.jwtService.isTokenNotExpired()) {
         return true;
     } else {
-      return this.logiService.checkSessionAsync();;
+      return await this.loginService.checkSessionAsync();
     }
   }
 }

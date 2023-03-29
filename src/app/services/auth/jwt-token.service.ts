@@ -56,5 +56,10 @@ export class JwtTokenService {
         this.jwtToken = token;
         this.decodedToken = jwt_decode(token);
     }
+
+    if (!token || token === '') {
+      this.jwtToken = null;
+      this.decodedToken = null;
+    }
   }
 }

@@ -5,13 +5,27 @@
       <form #form="ngForm" (ngSubmit)="editUserAsync()">
         
         <div class="mb-3">
-          <label for="InputName1" class="form-label">User name</label>
-          <input type="text" class="form-control" id="InputName1" name="name" [(ngModel)]="editUserRequest.name">
+          <label for="validationServer01" class="form-label">User name</label>
+          <input type="text" class="form-control {{ validators[0].state }}" id="validationServer01" name="name"
+          [(ngModel)]="editUserRequest.name" aria-describedby="validationServer01Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer01Feedback" class="invalid-feedback">
+            {{ validators[0].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="InputEmail1" class="form-label">User name</label>
-          <input type="email" class="form-control" id="InputEmail1" name="email" [(ngModel)]="editUserRequest.email">
+          <label for="validationServer02" class="form-label">User name</label>
+          <input type="email" class="form-control {{ validators[1].state }}" id="validationServer02" name="email"
+          [(ngModel)]="editUserRequest.email" aria-describedby="validationServer02Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer02Feedback" class="invalid-feedback">
+            {{ validators[1].message }}
+          </div>
         </div>
 
         <button type="submit" class="btn btn-outline-success me-md-2">Save</button>

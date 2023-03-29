@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/app/environments/environment';
 import { DeleteTask } from 'src/app/models/task/deleteTask.model';
 import { Task } from 'src/app/models/task/task.model';
 import { TasksService } from 'src/app/services/crud/tasks.service';
+import { CookieStorageService } from 'src/app/services/storage/cookie-storage.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -12,7 +14,7 @@ export class TasksListComponent implements OnInit {
 
   tasks: Task[] = [];
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService, private cookieStorageService: CookieStorageService) {}
 
   async ngOnInit() {
     try {
@@ -33,7 +35,7 @@ export class TasksListComponent implements OnInit {
   public async deleteTaskAsync(id: number) {
     let task: DeleteTask = {
       id: id,
-      userId: 1
+      userId: Number.parseInt(this.cookieStorageService.get(environment.keyUserId))
     };
 
     await this.tasksService.deleteTaskAsync(task);

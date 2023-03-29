@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChangePassword } from 'src/app/models/login/changePassword.model';
 import { LoginService } from 'src/app/services/auth/login.service';
 import { Location } from '@angular/common';
+import { ValidationService } from 'src/app/services/validator/validation.service';
+import { Validator } from 'src/app/models/validation/validator.model';
 
 @Component({
   selector: 'app-change-password',
@@ -9,6 +11,11 @@ import { Location } from '@angular/common';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
+  validators: Validator[] = [
+    new Validator('email'),
+    new Validator('oldPassword'),
+    new Validator('newPassword')
+  ];
 
   changePasswordCredentials: ChangePassword = {
     email: '',
@@ -18,12 +25,17 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private location: Location) { }
+    private location: Location,
+    private validationService: ValidationService) { }
 
   ngOnInit() { }
 
   public async submitAsync() {
-    await this.loginService.changePasswordAsync(this.changePasswordCredentials);
+    let result = this.loginService.getErrorResponse(await this.loginService.changePasswordAsync(this.changePasswordCredentials));
+
+    if (result) {
+      this.validationService.setValidator(result, this.validators);
+    }
   }
 
   public back() {

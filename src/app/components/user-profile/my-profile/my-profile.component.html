@@ -5,29 +5,56 @@
       <form #form="ngForm" (ngSubmit)="editUserAsync()">
 
         <div class="mb-3">
-          <label for="InputId1" class="form-label">User id</label>
-          <input type="text" class="form-control" id="InputId1" name="id" [(ngModel)]="user.id" disabled>
+          <label for="validationServer01" class="form-label">User id</label>
+          <input type="text" class="form-control {{ validators[0].state }}" id="validationServer01" name="id"
+          [(ngModel)]="user.id" disabled aria-describedby="validationServer01Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer01Feedback" class="invalid-feedback">
+            {{ validators[0].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="InputName1" class="form-label">User name</label>
-          <input type="text" class="form-control" id="InputName1" name="name" [(ngModel)]="user.name">
+          <label for="validationServer02" class="form-label">User name</label>
+          <input type="text" class="form-control {{ validators[1].state }}" id="validationServer02" name="name"
+          [(ngModel)]="user.name" aria-describedby="validationServer02Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer01Feedback" class="invalid-feedback">
+            {{ validators[1].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="InputEmail1" class="form-label">User email</label>
-          <input type="email" class="form-control" id="InputEmail1" name="email" [(ngModel)]="user.email">
+          <label for="validationServer03" class="form-label">User email</label>
+          <input type="email" class="form-control {{ validators[2].state }}" id="validationServer03" name="email"
+          [(ngModel)]="user.email" aria-describedby="validationServer03Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer03Feedback" class="invalid-feedback">
+            {{ validators[2].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="Role1" class="form-label">User role</label>
-          <input type="text" class="form-control" id="Role1" name="role" [(ngModel)]="user.role" disabled>
+          <label for="validationServer04" class="form-label">User role</label>
+          <input type="text" class="form-control {{ validators[3].state }}" id="validationServer04" name="role"
+          [(ngModel)]="user.role" disabled aria-describedby="validationServer04Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer04Feedback" class="invalid-feedback">
+            {{ validators[3].message }}
+          </div>
         </div>
 
         <button type="submit" class="btn btn-outline-success me-md-2">Save</button>
         <a class="btn btn-outline-secondary" role="button" (click)="back()">Back</a>
       </form>
-
     </div>
   </div>
 </div>

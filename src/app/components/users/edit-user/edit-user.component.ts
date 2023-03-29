@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EditUser } from 'src/app/models/user/editUser.model';
 import { UsersService } from 'src/app/services/crud/users.service';
 import { Location } from '@angular/common';
+import { Validator } from 'src/app/models/validation/validator.model';
+import { ValidationService } from 'src/app/services/validator/validation.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -10,6 +12,10 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
+  validators: Validator[] = [
+    new Validator('name'),
+    new Validator('email')
+  ];
 
   editUserRequest: EditUser = {
     id: 0,
@@ -20,7 +26,8 @@ export class EditUserComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private route: ActivatedRoute,
-    private location: Location) { }
+    private location: Location,
+    private validationService: ValidationService) { }
 
   async ngOnInit() { 
     try {
@@ -41,9 +48,11 @@ export class EditUserComponent implements OnInit {
   }
 
   public async editUserAsync() {
-    let result = await this.usersService.editUserAsync(this.editUserRequest);
+    let result = this.usersService.getErrorResponse(await this.usersService.editUserAsync(this.editUserRequest));
 
     if (result) {
+      this.validationService.setValidator(result, this.validators);
+    } else {
       this.back();
     }
   }

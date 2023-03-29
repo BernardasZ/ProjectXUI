@@ -3,23 +3,45 @@
   <div class="row">
     <div class="col-6">
       <form #form="ngForm" (ngSubmit)="editTaskAsync()">
+
         <div class="mb-3">
-          <label for="InputTitle1" class="form-label">Task title</label>
-          <input type="text" class="form-control" id="InputTitle1" name="title" [(ngModel)]="editTaskRequest.title">
+          <label for="validationServer01" class="form-label">Task title</label>
+          <input type="text" class="form-control {{ validators[0].state }}" id="validationServer01" name="title"
+          [(ngModel)]="editTaskRequest.title" aria-describedby="validationServer01Feedback" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer01Feedback" class="invalid-feedback">
+            {{ validators[0].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="InputDescription1" class="form-label">Task description</label>
-          <textarea class="form-control" id="InputDescription1" rows="5" name="description" [(ngModel)]="editTaskRequest.description"></textarea>
+          <label for="validationServer02" class="form-label">Task description</label>
+          <textarea class="form-control {{ validators[1].state }}" id="validationServer02" rows="5" name="description"
+          [(ngModel)]="editTaskRequest.description" aria-describedby="validationServer02Feedback" required></textarea>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer02Feedback" class="invalid-feedback">
+            {{ validators[1].message }}
+          </div>
         </div>
 
         <div class="mb-3">
-          <label for="InputTaskStatus1" class="form-label">Task status</label>
-          <select class="form-select" id="InputTaskStatus1" name="status" [(ngModel)]="editTaskRequest.status">
+          <label for="validationServer03" class="form-label">Task status</label>
+          <select class="form-select {{ validators[2].state }}" id="validationServer03" name="status"
+          [(ngModel)]="editTaskRequest.status"  aria-describedby="validationServer03Feedback" required>
             <option value="ToDo" selected="To Do">To do</option>
             <option value="InProgress">In progress</option>
             <option value="Done">Done</option>
           </select>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div id="validationServer03Feedback" class="invalid-feedback">
+            {{ validators[2].message }}
+          </div>
         </div>
 
         <button type="submit" class="btn btn-outline-success me-md-2">Save</button>

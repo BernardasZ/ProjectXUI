@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Task } from 'src/app/models/task/task.model';
 import { TasksService } from 'src/app/services/crud/tasks.service';
 import { Location } from '@angular/common';
+import { ValidationService } from 'src/app/services/validator/validation.service';
+import { Validator } from 'src/app/models/validation/validator.model';
 
 @Component({
   selector: 'app-edit-task',
@@ -10,7 +12,12 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-task.component.css']
 })
 export class EditTaskComponent implements OnInit {
-
+  validators: Validator[] = [
+    new Validator('title'),
+    new Validator('description'),
+    new Validator('status')
+  ];
+  
   editTaskRequest: Task = {
     id: 0,
     userId: 1,
@@ -22,7 +29,8 @@ export class EditTaskComponent implements OnInit {
   constructor(
     private tasksService: TasksService,
     private route: ActivatedRoute,
-    private location: Location) { }
+    private location: Location,
+    private validationService: ValidationService) { }
 
   async ngOnInit() {
     try {
@@ -43,10 +51,11 @@ export class EditTaskComponent implements OnInit {
   }
 
   public async editTaskAsync() {
-    let result = await this.tasksService.editTaskAsync(this.editTaskRequest);
-    
+    let result = this.tasksService.getErrorResponse(await this.tasksService.editTaskAsync(this.editTaskRequest));
     if (result) {
-      this.back();
+      this.validationService.setValidator(result, this.validators);
+    } else {
+      this.back()
     }
   }
 
