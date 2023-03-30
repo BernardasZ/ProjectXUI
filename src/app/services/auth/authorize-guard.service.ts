@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { JwtTokenService } from './jwt-token.service';
 import { LoginService } from './login.service';
 
@@ -11,13 +10,20 @@ export class AuthorizeGuardService {
 
   constructor(
     private jwtService: JwtTokenService,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private router: Router) { }
     
   async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
     if (this.jwtService.isTokenNotExpired()) {
         return true;
-    } else {
-      return await this.loginService.checkSessionAsync();
     }
+    
+    let token = this.jwtService.getToken();
+    if (token === null || token === '') {
+      this.router.navigate(['sign-in']);
+      return false;
+    }
+
+    return await this.loginService.checkSessionAsync();
   }
 }

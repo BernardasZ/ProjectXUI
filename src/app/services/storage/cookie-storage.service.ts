@@ -17,10 +17,10 @@ export class CookieStorageService {
   }
    
   public delete(key: string) {
-    this.cookieService.delete(key);
+    this.cookieService.delete(key, '/');
   }
    
   public deleteAll() {
-    this.cookieService.deleteAll();
+    this.cookieService.deleteAll('/');
   }
 }

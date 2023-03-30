@@ -11,6 +11,9 @@ import { MyProfileComponent } from './components/user-profile/my-profile/my-prof
 import { ChangePasswordComponent } from './components/user-profile/change-password/change-password.component';
 import { SignInComponent } from './components/authentication/sign-in/sign-in.component';
 import { SignOutComponent } from './components/user-profile/sign-out/sign-out.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset/password-reset.component';
+import { InitPasswordResetComponent } from './components/password-reset/init-password-reset/init-password-reset.component';
+import { AddUserComponent } from './components/users/add-user/add-user.component';
 
 const routes: Routes = [
   {
@@ -43,6 +46,10 @@ const routes: Routes = [
     canActivate: [AuthorizeGuardService]
   },
   {
+    path: 'users/add',
+    component: AddUserComponent
+  },
+  {
     path: 'users/edit/:id',
     component: EditUserComponent,
     canActivate: [AuthorizeGuardService]
@@ -61,6 +68,14 @@ const routes: Routes = [
     path: 'sign-out',
     component: SignOutComponent,
     canActivate: [AuthorizeGuardService]
+  },
+  {
+    path: 'init-reset-password',
+    component: InitPasswordResetComponent
+  },
+  {
+    path: 'reset-password',
+    component: PasswordResetComponent
   }
 ];
 

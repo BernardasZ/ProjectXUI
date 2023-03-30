@@ -63,11 +63,11 @@ export class LoginService {
   }
   
   public async initPasswordResetAsync(initPasswordReset: InitPasswordReset) {
-    await this.http.postAsync('authentication/init-password-reset', initPasswordReset);
+    return await this.http.postAsync('authentication/init-password-reset', initPasswordReset);
   }
 
   public async resetPasswordAsync(userPasswordReset: UserPasswordReset) {
-    await this.http.postAsync<User>('authentication/reset-password', userPasswordReset);
+    return await this.http.postAsync<User>('authentication/reset-password', userPasswordReset);
   }
 
   public async checkSessionAsync() {

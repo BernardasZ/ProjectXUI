@@ -21,6 +21,9 @@ import { HttpService, applicationHttpClientCreator } from './services/http/http.
 import { JwtTokenService } from './services/auth/jwt-token.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ErrorHandlerService } from './services/http/error-handler.service';
+import { PasswordResetComponent } from './components/password-reset/password-reset/password-reset.component';
+import { InitPasswordResetComponent } from './components/password-reset/init-password-reset/init-password-reset.component';
+import { AddUserComponent } from './components/users/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { ErrorHandlerService } from './services/http/error-handler.service';
     MyProfileComponent,
     ChangePasswordComponent,
     SignInComponent,
-    SignOutComponent
+    SignOutComponent,
+    PasswordResetComponent,
+    InitPasswordResetComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
